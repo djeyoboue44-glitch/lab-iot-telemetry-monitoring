@@ -106,6 +106,3 @@ telemetrie-project/
 │   └── Dockerfile
 └── iot_simulator.py
 ```
-```
-
-Copie-colle tout ce bloc directement dans ton fichier `README.md` sur GitHub.
