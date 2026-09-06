@@ -224,4 +224,3 @@ telemetrie-project/
 
 </div>
 
-Aussi : les noms de fichiers contiennent des espaces, donc j'ai encodé les espaces en `%20` dans les liens Markdown pour garantir l'affichage correct sur GitHub.
