@@ -1,4 +1,4 @@
-```markdown
+
 <div align="center">
 
 # 📡 IoT Telemetry Monitoring
@@ -200,6 +200,5 @@ telemetrie-project/
 *Projet réalisé dans le cadre d'une préparation à l'alternance Cybersécurité / Réseaux & Systèmes.*
 
 </div>
-```
 
 Voilà une version plus soignée : badges technos en haut, tableaux, emojis, section repliable pour les règles d'alerte, et une section aperçu centrée. Pense à créer le dossier `screenshots/` et à y placer tes images avec les noms exacts utilisés dans les liens (`iot-capteurs-dashboard.png`, etc.), sinon les images n'apparaîtront pas.
