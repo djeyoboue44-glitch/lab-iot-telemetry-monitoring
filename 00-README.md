@@ -93,33 +93,12 @@ Projet personnel de plateforme d'**observabilité full-stack**, déployée inté
 
 ---
 
-## 📊 Dashboards Grafana
-
-- **Infrastructure** — CPU Usage %, RAM Usage %, Conteneurs actifs
-- **IoT Capteurs** — Température par capteur, Batterie des capteurs % (sensor-01, 02, 03)
-
----
-
-## ✅ Cibles supervisées
-
-Toutes les cibles Prometheus sont opérationnelles :
-
-`prometheus` ✅ `pushgateway` ✅ `telegraf-iot` ✅ `node-exporter` ✅ `cadvisor` ✅ `microservice` ✅
-
----
-
 ## 🚀 Installation
 
 ```bash
 git clone <repo-url>
 cd telemetrie-project
 docker compose up -d
-```
-
-Reconstruire uniquement le microservice après modification :
-
-```bash
-docker compose up -d --build microservice
 ```
 
 ---
@@ -133,21 +112,9 @@ docker compose up -d --build microservice
 | Grafana | http://localhost:3000 |
 | Métriques microservice | http://localhost:8000/metrics |
 
-Lancer le simulateur de capteurs IoT :
-
 ```bash
 python3 iot_simulator.py
 ```
-
----
-
-## 🧪 Scénarios testés
-
-- ⛔ Extinction volontaire de `node-exporter` → validation du déclenchement et de la résolution d'une alerte infra
-- 🔌 Coupure de Mosquitto → observation de la reconnexion automatique de Telegraf
-- 📡 Simulation de capteurs déconnectés → validation de l'alerte `SensorOffline`
-- ✏️ Modification des règles d'alerting à chaud via `sed` + redémarrage du conteneur Prometheus
-- 🔍 Vérification des 8 règles d'alerte (groupées par domaine) depuis Grafana Alerting
 
 ---
 
@@ -158,40 +125,96 @@ telemetrie-project/
 ├── docker-compose.yml
 ├── prometheus/
 │   ├── prometheus.yml
-│   └── rules/
-│       └── alerts.yml
-├── alertmanager/
-│   └── alertmanager.yml
-├── grafana/
-│   ├── provisioning/
-│   └── dashboards/
-├── telegraf/
-│   └── telegraf.conf
-├── microservice/
-│   ├── app.py
-│   └── Dockerfile
+│   └── rules/alerts.yml
+├── alertmanager/alertmanager.yml
+├── grafana/{provisioning,dashboards}/
+├── telegraf/telegraf.conf
+├── microservice/{app.py,Dockerfile}
 └── iot_simulator.py
 ```
 
 ---
 
-## 🖼️ Aperçu
+## 🖼️ Aperçu du projet
 
-<div align="center">
+### 🏗️ Mise en place de l'infrastructure
 
-**Dashboard IoT Capteurs**
-![Dashboard IoT Capteurs](screenshots/iot-capteurs-dashboard.png)
+**1. Arborescence du projet & docker-compose (services grafana/alertmanager/mosquitto/telegraf)**
+![1](1-Cahier%20telemetrie%20.PNG)
 
-**Dashboard Infrastructure**
-![Dashboard Infrastructure](screenshots/infrastructure-dashboard.png)
+**2. Configuration Prometheus (prometheus.yml — scrape configs)**
+![2](2-Cahier%20telemetrie%20.PNG)
 
-**Règles d'alerte Grafana**
-![Règles d'alerte Grafana](screenshots/alert-rules-grafana.png)
+**3. Règles d'alerte — domaines infra & iot**
+![3](3-Cahier%20telemetrie%20.PNG)
 
-**Targets Prometheus**
-![Targets Prometheus](screenshots/prometheus-targets.png)
+**4. Règles d'alerte — domaine applicatif & configuration Telegraf**
+![4](4-Cahier%20telemetrie%20.PNG)
 
-</div>
+**5. Configuration Alertmanager (routes & receivers par domaine)**
+![5](5-Cahier%20telemetrie%20.PNG)
+
+**6. Microservice FastAPI instrumenté (app.py) & Dockerfile**
+![6](6-Cahier%20telemetrie%20.PNG)
+
+**7. Dockerfile microservice & simulateur IoT (iot_simulator.py)**
+![7](7-Cahier%20telemetrie.PNG)
+
+### 🐳 Déploiement Docker Compose
+
+**8. Installation docker-compose & `docker compose up -d`**
+![8](8-cahier%20telemetrie.PNG)
+
+**9. Vérification des conteneurs (`docker compose ps`)**
+![9](9-%20Cahier%20telemetrie%20.PNG)
+
+**10. Graphe Prometheus — métriques collectées**
+![10](Cahier%20telemetrie%2010%20.PNG)
+
+**11. Alertes actives dans Alertmanager**
+![11](Cahier%20telemetrie%2011.PNG)
+
+### 📊 Dashboards Grafana
+
+**12. Interface d'accueil Grafana**
+![12](Cahier%20telemetrie%2012.PNG)
+
+**13. Simulateur IoT en cours d'exécution (publication MQTT)**
+![13](Cahier%20telemetrie%2013.PNG)
+
+**14. Logs Prometheus & Telegraf**
+![14](Cahier%20telemetrie%2014.PNG)
+
+### 🧪 Tests & scénarios de panne
+
+**15. Test d'arrêt de node-exporter (déclenchement d'alerte)**
+![15](cahier%20telemetrie%2015.PNG)
+
+**16. Dashboard Grafana Infrastructure (CPU / RAM / Conteneurs actifs)**
+![16](cahier%20telemetrie%2016.PNG)
+
+**17. Vérification des conteneurs après redémarrage**
+![17](cahier%20telemetrie%2017.PNG)
+
+**18. Logs Telegraf — reconnexion automatique à Mosquitto**
+![18](cahier%20telemetrie%2018.PNG)
+
+**19. Test du simulateur (site-A) — publication des capteurs**
+![19](cahier%20telemetrie%2019.PNG)
+
+**20. Logs Docker du conteneur Telegraf**
+![20](cahier%20telemetrie%2020.PNG)
+
+### 🔔 Alerting avancé
+
+**21. Vue complète des règles d'alerte (infra / iot / applicatif)**
+![21](cahier%20telemetrie%2021.PNG)
+
+**22. Modification des règles d'alerte à chaud (`sed` + `grep`)**
+![22](cahier%20telemetrie%2022.PNG)
+
+**23. Liste des règles d'alerte dans Grafana Alerting**
+![23](cahier%20telemetrie%2023.PNG)
 
 ---
 
@@ -201,4 +224,4 @@ telemetrie-project/
 
 </div>
 
-Voilà une version plus soignée : badges technos en haut, tableaux, emojis, section repliable pour les règles d'alerte, et une section aperçu centrée. Pense à créer le dossier `screenshots/` et à y placer tes images avec les noms exacts utilisés dans les liens (`iot-capteurs-dashboard.png`, etc.), sinon les images n'apparaîtront pas.
+Aussi : les noms de fichiers contiennent des espaces, donc j'ai encodé les espaces en `%20` dans les liens Markdown pour garantir l'affichage correct sur GitHub.
