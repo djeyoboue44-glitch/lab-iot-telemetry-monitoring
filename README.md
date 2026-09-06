@@ -1,2 +1,2 @@
 # lab-iot-telemetry-monitoring
-Projet de télémétrie et observabilité : simulation IoT (MQTT), exporteurs Prometheus, dashboards Grafana, règles d'alerting Alertmanager par domaine, le tout conteneurisé (Docker Compose).
+Ce projet met en place une chaîne complète de télémétrie et de supervision : des capteurs IoT simulés publient leurs données via MQTT (Mosquitto), collectées par Telegraf et exposées à Prometheus. Un microservice FastAPI instrumenté ajoute des métriques applicatives (latence, taux d'erreur). Grafana visualise l'ensemble (infra, IoT, applicatif) et Alertmanager route les alertes par domaine vers des canaux dédiés. Déploiement 100% Docker Compose.
